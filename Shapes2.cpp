@@ -15,51 +15,51 @@ using namespace std;
 struct Square{
   double side;
 };
+void squareOutput(ostream&, const Square&);
 
 struct Rectangle{
   double length;
   double width;
 };
+void rectangleOutput(ostream&, const Rectangle&);
 
 struct Circle{
   double radius;
 };
+void circleOutput(ostream&, const Circle&);
 
 struct Triangle{
   double side;
 };
+void triangleOutput(ostream&, const Triangle&);
 
 struct Cube{
   double side;
 };
+void cubeOutput(ostream&, const Cube&);
 
 struct Box{
   double length;
   double width;
   double height;
 };
+void boxOutput(ostream&, const Box&);
 
 struct Cylinder{
   double radius;
   double height;
 };
+void cylinderOutput(ostream&, const Cylinder&);
 
 struct Prism{
   double side;
   double height;
 };
+void prismOutput(ostream&, const Prism&);
 
 vector<string> parseString(string);
 void checkShape(vector<string>&, vector<void*>&, vector<string>&);
 void calcShape(vector<string>&, vector<void*>&, vector<string>&);
-void squareOutput(ostream&, const Square&);
-void rectangleOutput(ostream&, const Rectangle&);
-void circleOutput(ostream&, const Circle&);
-void triangleOutput(ostream&, const Triangle&);
-void cubeOutput(ostream&, const Cube&);
-void boxOutput(ostream&, const Box&);
-void cylinderOutput(ostream&, const Cylinder&);
-void prismOutput(ostream&, const Prism&);
 
 const double PI = 3.14159;
 
@@ -74,15 +74,14 @@ int main(){
   vector<string> shapesTypeBag;
 
   while (fin.good()){
-    if(shapesBag.size()!=100){
-      string curLine;
-      getline(fin, curLine);
-      vector<string> lineElems = parseString(curLine);
-      if(lineElems.size()!=0){
-       checkShape(lineElems, shapesBag, shapesTypeBag);
-      }
+    string curLine;
+    getline(fin, curLine);
+    vector<string> lineElems = parseString(curLine);
+    if(lineElems.size() != 0){
+     checkShape(lineElems, shapesBag, shapesTypeBag);
     }
   }
+
   fin.close();
 
   for (int i = 0; i < shapesBag.size(); i++){
@@ -132,6 +131,7 @@ int main(){
   }
 
   ofstream fout;
+  fout.open("Shapes.output.txt");
 
   for (int i = 0; i < shapesBag.size(); i++){
      if (shapesTypeBag[i] == "SQUARE"){
@@ -251,7 +251,7 @@ void calcShape(vector<string>& lineWords, vector<void*>& shapesBag, vector<strin
   else if (shapeType == "CUBE"){
     Cube* c = new Cube;
     c->side = lineWords.size() >= 2 ? atof(lineWords.at(1).c_str()) : 0;
-    shapesBag.push_back(c);\
+    shapesBag.push_back(c);
     shapesTypeBag.push_back("CUBE");
   }
   else if (shapeType == "BOX"){
